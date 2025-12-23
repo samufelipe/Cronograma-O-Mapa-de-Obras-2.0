@@ -2,107 +2,94 @@
 import React from 'react';
 import { 
   ClipboardList, 
-  Target, 
-  Clock, 
-  ShieldAlert, 
-  Zap,
-  Lock,
-  BarChart3,
-  CheckCircle2,
-  Gift,
-  FileSpreadsheet,
+  FileSpreadsheet, 
   FileText,
-  Construction,
-  Hammer,
-  Scale,
-  ShieldCheck,
-  Search
+  CheckCircle2
 } from 'lucide-react';
-import { LearningCard, FAQItem } from './types';
+import { FAQItem } from './types';
 
-export const LEARNING_CARDS: LearningCard[] = [
+export const AGENDA = [
   {
-    title: "O Salto de Maturidade Técnica",
-    description: "Para quem já atua, mas sente que o 'executivo' da faculdade é raso. Vamos detalhar a ordem técnica exata para obras de luxo que evita erros caros.",
-    icon: "Construction"
+    day: "DIA 01",
+    date: "31/01 - 09:00",
+    title: "A Engenharia do Planejamento",
+    topics: [
+      "O Mapa do Início ao Fim: O passo a passo definitivo para montar um cronograma eficiente e realista que o mestre de obras realmente respeita.",
+      "Radar de Marcos Críticos: Aprenda a identificar os pontos de 'não retorno' da obra e antecipe erros antes que eles se tornem prejuízos no seu bolso.",
+      "Sincronização Mestra: Como encaixar fornecedores e medições no 'timing' perfeito para que a obra nunca pare por falta de material ou medição atrasada."
+    ]
   },
   {
-    title: "Gestão x Visita de Cortesia",
-    description: "Aprenda a auditar a obra com olhar de gestora, não de convidada. Como conferir infra e civil sem ser enganada por prazos falsos.",
-    icon: "Search"
-  },
-  {
-    title: "Comando de Fornecedores",
-    description: "O script exato para se posicionar tecnicamente diante de empreiteiros experientes e recuperar sua autoridade no canteiro.",
-    icon: "ShieldAlert"
-  },
-  {
-    title: "Sua Planilha de Escalonamento",
-    description: "Acesso à nossa estrutura de gerenciamento real. Uma ferramenta de controle com mais de 200 itens para profissionalizar seu escritório.",
-    icon: "FileSpreadsheet"
-  },
-  {
-    title: "Honorários de Gestão de Obra",
-    description: "Como precificar o acompanhamento técnico de forma que o cliente veja valor e seu escritório tenha lucro real, além do projeto.",
-    icon: "BarChart3"
+    day: "DIA 02",
+    date: "01/02 - 09:00",
+    title: "O Comando e a Liderança Técnica",
+    topics: [
+      "Blindagem contra Imprevistos: Desenvolva a habilidade de ajustar rotas e lidar com mudanças no canteiro sem desespero e mantendo o lucro da operação.",
+      "O Cronograma como Arma de Poder: Como usar o planejamento para se posicionar com total confiança e ser a líder máxima do seu canteiro de obras.",
+      "Venda de Gestão Lucrativa: Como transformar o acompanhamento de obra em um serviço de alto valor e parar de uma vez por todas de fazer visitas 'de brinde'."
+    ]
   }
 ];
 
+export const QUALIFICATION = {
+  for: [
+    "Arquitetas com 2 a 5 anos de mercado que buscam segurança.",
+    "Donas de escritório que querem parar de perder lucro na obra.",
+    "Profissionais autônomas que sentem que a obra é um 'caos'.",
+    "Quem quer cobrar pela gestão técnica e não apenas pela visita."
+  ],
+  notFor: [
+    "Quem acredita que obra é 'problema do mestre de obras'.",
+    "Estudantes que ainda não pretendem atuar no campo.",
+    "Grandes construtoras com processos já consolidados.",
+    "Quem busca apenas teoria sem aplicação prática."
+  ]
+};
+
 export const BONUSES = [
   {
-    title: "Template de Cronograma Inovando",
+    title: "Planilha Mestra de Cronograma 2.0",
     value: "R$ 197,00",
-    description: "O mesmo modelo de planilha que usamos em nossas obras de alto padrão para você preencher e usar.",
-    icon: <FileSpreadsheet className="w-6 h-6" />
+    description: "A mesma ferramenta que usamos para organizar prazos e evitar atrasos no nosso escritório.",
+    icon: <FileSpreadsheet className="w-5 h-5" />
   },
   {
     title: "Checklist de Vistoria Técnica",
-    value: "R$ 47,00",
-    description: "Os pontos críticos que você deve conferir em cada fase para garantir a fidelidade do projeto.",
-    icon: <ClipboardList className="w-6 h-6" />
+    value: "R$ 97,00",
+    description: "O guia passo a passo para conferir cada etapa da obra sem esquecer detalhes cruciais.",
+    icon: <ClipboardList className="w-5 h-5" />
   },
   {
-    title: "Guia de Precificação Técnica",
-    value: "R$ 97,00",
-    description: "Como apresentar o serviço de gestão de obras para seus clientes e aumentar seu ticket médio.",
-    icon: <FileText className="w-6 h-6" />
+    title: "Script de Venda de Gestão",
+    value: "R$ 147,00",
+    description: "Como explicar para o cliente que a sua gestão economiza o dinheiro dele.",
+    icon: <FileText className="w-5 h-5" />
   }
 ];
 
 export const FAQ_ITEMS: FAQItem[] = [
   {
-    question: "O que exatamente está incluso no valor de R$ 49,90?",
-    answer: "Este valor garante seu ingresso individual para os 2 dias de workshop online e ao vivo, além de todos os bônus digitais mencionados (planilhas e checklists). Não inclui consultoria individual, mentoria privada ou visitas presenciais."
+    question: "Por que o valor é apenas R$ 49,90?",
+    answer: "Este é um valor simbólico de comprometimento. Queremos que arquitetas que realmente desejam profissionalizar sua gestão tenham acesso ao nosso método. O valor garante seu acesso aos DOIS DIAS de workshop ao vivo e a TODOS os bônus (Planilha, Checklist e Script)."
   },
   {
-    question: "Já tenho alguns anos de mercado, o conteúdo não será básico demais?",
-    answer: "Pelo contrário. O workshop foi desenhado para quem já está no campo de batalha (2 a 5 anos ou mais) e percebeu que a prática exige um nível de controle que o básico não resolve. Focamos em gestão técnica para arquitetas autônomas."
+    question: "O Workshop ficará gravado para assistir depois?",
+    answer: "Não. Esta é uma imersão 100% AO VIVO e interativa. Acreditamos que a transformação acontece na troca real e no compromisso de estar presente. Programe-se para estar conosco nos dias 31/01 e 01/02 às 09:00."
   },
   {
-    question: "Sou autônoma e trabalho sozinha, consigo aplicar?",
-    answer: "Sim. O método serve justamente para você organizar seus processos e parar de perder tempo 'apagando incêndios' em obra, permitindo que você profissionalize a gestão do seu escritório próprio."
+    question: "Eu não entendo nada de engenharia ou execução. Vou conseguir acompanhar?",
+    answer: "Com certeza. O método foi criado justamente para arquitetas que sentem essa lacuna da faculdade. Explicamos a lógica da obra de forma visual e prática, focada em quem projeta e precisa gerenciar fornecedores, não em quem vai levantar a parede."
   },
   {
-    question: "Como vou receber o material e o acesso?",
-    answer: "Imediatamente após a confirmação, você receberá um e-mail com as instruções de acesso e será convidada para o nosso grupo exclusivo de avisos via WhatsApp, onde enviaremos o link da transmissão ao vivo."
+    question: "Já tenho alguns anos de mercado, esse conteúdo não é básico?",
+    answer: "Se você ainda sente frio na barriga ao entrar na obra ou se o mestre de obras ainda questiona suas decisões, esse conteúdo é para você. Não vamos falar de teoria, vamos entregar o fluxo de trabalho de um escritório que já entregou mais de 250 obras."
   },
   {
-    question: "Preciso ter obras em andamento para participar?",
-    answer: "Não é obrigatório, mas o workshop vai te dar a segurança técnica para que sua próxima obra seja gerida de forma profissional desde o primeiro dia, evitando prejuízos comuns por falta de acompanhamento."
+    question: "Quando recebo os bônus prometidos?",
+    answer: "O acesso aos materiais (Planilha Mestra, Checklist e Script) será liberado logo após a conclusão da imersão no segundo dia, para garantir que você saiba exatamente como aplicar cada ferramenta da maneira correta."
+  },
+  {
+    question: "Serve para quem trabalha apenas com interiores?",
+    answer: "Sim! Nosso foco principal é a gestão de obras de interiores residenciais e comerciais. O cronograma é adaptado para a velocidade e os detalhes que esse tipo de obra exige."
   }
 ];
-
-export const ICON_MAP: Record<string, React.ReactNode> = {
-  Clock: <Clock className="w-8 h-8 text-black" />,
-  ShieldAlert: <ShieldAlert className="w-8 h-8 text-black" />,
-  Target: <Target className="w-8 h-8 text-black" />,
-  BarChart3: <BarChart3 className="w-8 h-8 text-black" />,
-  Zap: <Zap className="w-8 h-8 text-black" />,
-  Lock: <Lock className="w-8 h-8 text-black" />,
-  CheckCircle2: <CheckCircle2 className="w-8 h-8 text-black" />,
-  Construction: <Construction className="w-8 h-8 text-black" />,
-  Hammer: <Hammer className="w-8 h-8 text-black" />,
-  Scale: <Scale className="w-8 h-8 text-black" />,
-  Search: <Search className="w-8 h-8 text-black" />,
-  FileSpreadsheet: <FileSpreadsheet className="w-8 h-8 text-black" />
-};
