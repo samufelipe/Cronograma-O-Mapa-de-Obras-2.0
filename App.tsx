@@ -22,20 +22,26 @@ import {
 } from 'lucide-react';
 import { FAQ_ITEMS, BONUSES, AGENDA, QUALIFICATION } from './constants';
 
-// Referências de arquivos corrigidas de forma definitiva
-// input_file_0.png -> Logo Oficial (Preto/Dourado)
-// input_file_1.png -> Logo Oficial (Branco/Dourado)
-// input_file_2.png -> Foto das Mentoras (Ingrid e Fernanda)
-const LOGO_BLACK_GOLD = "input_file_0.png";
-const LOGO_WHITE_GOLD = "input_file_1.png";
-const actualMentorsImg = "input_file_2.png";
+// SOLUÇÃO FINAL: Caminhos relativos diretos sem barra inicial.
+// Isso força o navegador a procurar o arquivo no mesmo diretório de execução.
+const LOGO_BLACK_GOLD = 'input_file_0.png';
+const LOGO_WHITE_GOLD = 'input_file_1.png';
+const actualMentorsImg = 'input_file_2.png';
 
 const Logo = ({ className = "w-10 h-10", variant = "black" }: { className?: string; variant?: "black" | "white" }) => (
   <img 
     src={variant === "black" ? LOGO_BLACK_GOLD : LOGO_WHITE_GOLD} 
     alt="Logo Cronograma O Mapa de Obras 2.0" 
     className={`${className} object-contain block`}
-    style={{ minWidth: '32px' }}
+    loading="eager"
+    onError={(e) => {
+      // Pequeno hack de segurança: se o relativo falhar, tentamos o absoluto da raiz
+      const target = e.target as HTMLImageElement;
+      const currentSrc = target.getAttribute('src');
+      if (currentSrc && !currentSrc.startsWith('/')) {
+        target.src = '/' + currentSrc;
+      }
+    }}
   />
 );
 
@@ -201,43 +207,24 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* AGENDA */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-6 max-w-5xl">
-           <div className="text-center mb-20 space-y-4">
-              <h2 className="text-4xl font-black text-brand-black tracking-tighter uppercase">Cronograma da Imersão</h2>
-              <div className="w-20 h-2 bg-brand-gold mx-auto"></div>
-           </div>
-           
-           <div className="grid md:grid-cols-2 gap-8">
-              {AGENDA.map((item, i) => (
-                <div key={i} className="bg-white border-2 border-brand-black p-10 shadow-hard relative group">
-                   <span className="absolute top-4 right-4 text-zinc-100 text-6xl font-black group-hover:text-brand-gold/10 transition-colors">{i+1}</span>
-                   <span className="text-brand-gold font-black text-[10px] uppercase tracking-widest block mb-2">{item.date}</span>
-                   <h3 className="text-2xl font-black uppercase mb-8 border-b-2 border-zinc-50 pb-4 tracking-tighter">{item.title}</h3>
-                   <ul className="space-y-4">
-                      {item.topics.map((topic, j) => (
-                        <li key={j} className="flex gap-3 text-sm font-bold text-zinc-600">
-                           <CheckCircle2 className="w-5 h-5 text-brand-gold flex-shrink-0" /> {topic}
-                        </li>
-                      ))}
-                   </ul>
-                </div>
-              ))}
-           </div>
-        </div>
-      </section>
-
       {/* ABOUT MENTORS */}
       <section className="py-24 bg-white overflow-hidden">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-12 gap-16 items-center max-w-6xl mx-auto">
             <div className="lg:col-span-5 relative">
-              <div className="relative z-10 border-2 border-brand-black shadow-hard bg-white overflow-hidden">
+              <div className="relative z-10 border-2 border-brand-black shadow-hard bg-zinc-100 overflow-hidden">
                 <img 
                   src={actualMentorsImg} 
                   alt="Ingrid Zarza e Fernanda Bradaschia" 
-                  className="w-full h-auto object-cover"
+                  className="w-full h-auto object-cover block"
+                  loading="lazy"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    const currentSrc = target.getAttribute('src');
+                    if (currentSrc && !currentSrc.startsWith('/')) {
+                      target.src = '/' + currentSrc;
+                    }
+                  }}
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-brand-gold -z-0"></div>
@@ -283,6 +270,33 @@ const App: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* AGENDA */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6 max-w-5xl">
+           <div className="text-center mb-20 space-y-4">
+              <h2 className="text-4xl font-black text-brand-black tracking-tighter uppercase">Cronograma da Imersão</h2>
+              <div className="w-20 h-2 bg-brand-gold mx-auto"></div>
+           </div>
+           
+           <div className="grid md:grid-cols-2 gap-8">
+              {AGENDA.map((item, i) => (
+                <div key={i} className="bg-white border-2 border-brand-black p-10 shadow-hard relative group">
+                   <span className="absolute top-4 right-4 text-zinc-100 text-6xl font-black group-hover:text-brand-gold/10 transition-colors">{i+1}</span>
+                   <span className="text-brand-gold font-black text-[10px] uppercase tracking-widest block mb-2">{item.date}</span>
+                   <h3 className="text-2xl font-black uppercase mb-8 border-b-2 border-zinc-50 pb-4 tracking-tighter">{item.title}</h3>
+                   <ul className="space-y-4">
+                      {item.topics.map((topic, j) => (
+                        <li key={j} className="flex gap-3 text-sm font-bold text-zinc-600">
+                           <CheckCircle2 className="w-5 h-5 text-brand-gold flex-shrink-0" /> {topic}
+                        </li>
+                      ))}
+                   </ul>
+                </div>
+              ))}
+           </div>
         </div>
       </section>
 
@@ -383,7 +397,7 @@ const App: React.FC = () => {
         <div className="container mx-auto px-6 flex flex-col items-center gap-6">
           <Logo className="w-16 h-16" variant="black" />
           <div className="flex gap-8">
-             <a href="https://instagram.com/inovandonasuaobra" target="_blank" className="text-zinc-400 hover:text-brand-black transition-colors">
+             <a href="https://instagram.com/inovandonasuaobra" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-brand-black transition-colors">
                 <Instagram className="w-6 h-6" />
              </a>
           </div>
