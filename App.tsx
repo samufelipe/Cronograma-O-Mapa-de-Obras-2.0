@@ -22,10 +22,13 @@ import {
 } from 'lucide-react';
 import { FAQ_ITEMS, BONUSES, AGENDA, QUALIFICATION } from './constants';
 
-// Referências corrigidas e validadas conforme o histórico de envios
-const LOGO_BLACK_GOLD = "input_file_3.png"; // Logo com triângulo preto
-const LOGO_WHITE_GOLD = "input_file_4.png"; // Logo com triângulo branco
-const actualMentorsImg = "input_file_6.png"; // Foto oficial das mentoras enviada agora
+// Referências de arquivos corrigidas de forma definitiva
+// input_file_0.png -> Logo Oficial (Preto/Dourado)
+// input_file_1.png -> Logo Oficial (Branco/Dourado)
+// input_file_2.png -> Foto das Mentoras (Ingrid e Fernanda)
+const LOGO_BLACK_GOLD = "input_file_0.png";
+const LOGO_WHITE_GOLD = "input_file_1.png";
+const actualMentorsImg = "input_file_2.png";
 
 const Logo = ({ className = "w-10 h-10", variant = "black" }: { className?: string; variant?: "black" | "white" }) => (
   <img 
