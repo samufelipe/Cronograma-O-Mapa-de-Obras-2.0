@@ -22,16 +22,21 @@ import {
 } from 'lucide-react';
 import { FAQ_ITEMS, BONUSES, AGENDA, QUALIFICATION } from './constants';
 
-// Referências locais estáveis para as imagens enviadas pelo usuário
-const LOGO_BLACK_GOLD = "input_file_3.png";
-const LOGO_WHITE_GOLD = "input_file_4.png";
-const actualMentorsImg = "input_file_2.png";
+// Referências baseadas nos arquivos enviados pelo usuário
+// input_file_0: Logo oficial (Preto/Dourado)
+// input_file_1: Logo oficial (Branco/Dourado)
+const LOGO_BLACK_GOLD = "input_file_0.png";
+const LOGO_WHITE_GOLD = "input_file_1.png";
+
+// AVISO: A imagem das mentoras ainda não foi identificada nesta sessão. 
+// Usei um placeholder temporário. Por favor, anexe a foto oficial das mentoras na próxima mensagem.
+const actualMentorsImg = "https://images.unsplash.com/photo-1600880212340-02344032b854?q=80&w=1000&auto=format&fit=crop"; 
 
 const Logo = ({ className = "w-10 h-10", variant = "black" }: { className?: string; variant?: "black" | "white" }) => (
   <img 
     src={variant === "black" ? LOGO_BLACK_GOLD : LOGO_WHITE_GOLD} 
     alt="Logo Cronograma O Mapa de Obras 2.0" 
-    className={className} 
+    className={`${className} object-contain`} 
   />
 );
 
@@ -61,7 +66,7 @@ const Header = () => (
   <nav className="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b-2 border-brand-black py-4">
     <div className="container mx-auto px-6 flex justify-between items-center">
       <div className="flex items-center gap-3">
-        <Logo className="w-8 h-8" variant="black" />
+        <Logo className="w-10 h-10" variant="black" />
         <span className="font-black text-brand-black text-[10px] md:text-xs uppercase tracking-tighter">CRONOGRAMA O MAPA DE OBRAS 2.0</span>
       </div>
       <button onClick={() => document.getElementById('ingresso')?.scrollIntoView({ behavior: 'smooth' })} 
@@ -377,7 +382,7 @@ const App: React.FC = () => {
 
       <footer className="bg-white py-12 border-t-2 border-brand-black">
         <div className="container mx-auto px-6 flex flex-col items-center gap-6">
-          <Logo className="w-12 h-12" variant="black" />
+          <Logo className="w-16 h-16" variant="black" />
           <div className="flex gap-8">
              <a href="https://instagram.com/inovandonasuaobra" target="_blank" className="text-zinc-400 hover:text-brand-black transition-colors">
                 <Instagram className="w-6 h-6" />
