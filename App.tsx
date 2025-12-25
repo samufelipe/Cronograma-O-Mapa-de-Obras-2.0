@@ -22,12 +22,17 @@ import {
 } from 'lucide-react';
 import { FAQ_ITEMS, BONUSES, AGENDA, QUALIFICATION } from './constants';
 
-const Logo = ({ className = "w-8 h-8" }: { className?: string }) => (
-  <svg viewBox="0 0 500 500" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="50" y="50" width="400" height="400" fill="#FFB800" />
-    <path d="M150 150 L350 150 L350 350 L150 350 Z" fill="black" />
-    <path d="M200 200 L300 300 M300 200 L200 300" stroke="#FFB800" strokeWidth="20" />
-  </svg>
+// Referências locais estáveis para as imagens enviadas pelo usuário
+const LOGO_BLACK_GOLD = "input_file_3.png";
+const LOGO_WHITE_GOLD = "input_file_4.png";
+const actualMentorsImg = "input_file_2.png";
+
+const Logo = ({ className = "w-10 h-10", variant = "black" }: { className?: string; variant?: "black" | "white" }) => (
+  <img 
+    src={variant === "black" ? LOGO_BLACK_GOLD : LOGO_WHITE_GOLD} 
+    alt="Logo Cronograma O Mapa de Obras 2.0" 
+    className={className} 
+  />
 );
 
 const Countdown = () => {
@@ -55,9 +60,9 @@ const Countdown = () => {
 const Header = () => (
   <nav className="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b-2 border-brand-black py-4">
     <div className="container mx-auto px-6 flex justify-between items-center">
-      <div className="flex items-center gap-2">
-        <Logo className="w-6 h-6" />
-        <span className="font-black text-brand-black text-sm uppercase tracking-tighter">Inovando</span>
+      <div className="flex items-center gap-3">
+        <Logo className="w-8 h-8" variant="black" />
+        <span className="font-black text-brand-black text-[10px] md:text-xs uppercase tracking-tighter">CRONOGRAMA O MAPA DE OBRAS 2.0</span>
       </div>
       <button onClick={() => document.getElementById('ingresso')?.scrollIntoView({ behavior: 'smooth' })} 
               className="bg-brand-black text-brand-gold px-6 py-2 text-[10px] font-black uppercase tracking-widest hover:bg-brand-gold hover:text-brand-black transition-all">
@@ -123,12 +128,6 @@ const LeadForm = () => {
 
 const App: React.FC = () => {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
-
-  // Imagem enviada pelo usuário
-  const mentorsImageUrl = "https://api.screenshotone.com/take?url=https%3A%2F%2Fstorage.googleapis.com%2Fstatic-content-prod%2F8835f8d0-0f37-11ef-9c9e-0242ac120002%2F679ba22f518e3a24ec08b76c%2Finput_file_0.png&access_key=YOUR_ACCESS_KEY&full_page=true"; 
-  // Nota: Em um ambiente de produção real, usaríamos o caminho relativo ou a base64. 
-  // Como estamos no ambiente de chat, vou referenciar a imagem que você subiu.
-  const actualMentorsImg = "https://storage.googleapis.com/static-content-prod/8835f8d0-0f37-11ef-9c9e-0242ac120002/679ba22f518e3a24ec08b76c/input_file_0.png";
 
   return (
     <div className="antialiased font-sans text-brand-black bg-white">
@@ -378,13 +377,16 @@ const App: React.FC = () => {
 
       <footer className="bg-white py-12 border-t-2 border-brand-black">
         <div className="container mx-auto px-6 flex flex-col items-center gap-6">
-          <Logo className="w-8 h-8" />
+          <Logo className="w-12 h-12" variant="black" />
           <div className="flex gap-8">
              <a href="https://instagram.com/inovandonasuaobra" target="_blank" className="text-zinc-400 hover:text-brand-black transition-colors">
                 <Instagram className="w-6 h-6" />
              </a>
           </div>
-          <p className="text-[10px] font-black uppercase tracking-[0.5em] text-zinc-300">Inovando Arquitetura • 2026</p>
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 text-center">
+            CRONOGRAMA O MAPA DE OBRAS 2.0 <br /> 
+            <span className="text-[8px] tracking-[0.5em] text-zinc-200">Inovando Arquitetura • 2026</span>
+          </p>
         </div>
       </footer>
     </div>
