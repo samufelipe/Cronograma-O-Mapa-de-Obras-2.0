@@ -22,21 +22,17 @@ import {
 } from 'lucide-react';
 import { FAQ_ITEMS, BONUSES, AGENDA, QUALIFICATION } from './constants';
 
-// Referências baseadas nos arquivos enviados pelo usuário
-// input_file_0: Logo oficial (Preto/Dourado)
-// input_file_1: Logo oficial (Branco/Dourado)
-const LOGO_BLACK_GOLD = "input_file_0.png";
-const LOGO_WHITE_GOLD = "input_file_1.png";
-
-// AVISO: A imagem das mentoras ainda não foi identificada nesta sessão. 
-// Usei um placeholder temporário. Por favor, anexe a foto oficial das mentoras na próxima mensagem.
-const actualMentorsImg = "https://images.unsplash.com/photo-1600880212340-02344032b854?q=80&w=1000&auto=format&fit=crop"; 
+// Referências corrigidas e validadas conforme o histórico de envios
+const LOGO_BLACK_GOLD = "input_file_3.png"; // Logo com triângulo preto
+const LOGO_WHITE_GOLD = "input_file_4.png"; // Logo com triângulo branco
+const actualMentorsImg = "input_file_6.png"; // Foto oficial das mentoras enviada agora
 
 const Logo = ({ className = "w-10 h-10", variant = "black" }: { className?: string; variant?: "black" | "white" }) => (
   <img 
     src={variant === "black" ? LOGO_BLACK_GOLD : LOGO_WHITE_GOLD} 
     alt="Logo Cronograma O Mapa de Obras 2.0" 
-    className={`${className} object-contain`} 
+    className={`${className} object-contain block`}
+    style={{ minWidth: '32px' }}
   />
 );
 
@@ -238,7 +234,7 @@ const App: React.FC = () => {
                 <img 
                   src={actualMentorsImg} 
                   alt="Ingrid Zarza e Fernanda Bradaschia" 
-                  className="w-full h-auto object-cover hover:scale-105 transition-all duration-700"
+                  className="w-full h-auto object-cover"
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-brand-gold -z-0"></div>
