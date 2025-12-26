@@ -6,7 +6,6 @@ import {
   ChevronDown, 
   ChevronUp,
   CheckCircle2,
-  Check,
   Lock,
   Trophy,
   Video,
@@ -20,8 +19,9 @@ import {
   Star,
   Users
 } from 'lucide-react';
-import { FAQ_ITEMS, BONUSES, AGENDA, QUALIFICATION } from './constants';
+import { FAQ_ITEMS, BONUSES, AGENDA } from './constants';
 
+// Referências diretas aos arquivos na raiz
 const LOGO_BLACK_GOLD = 'input_file_0.png';
 const actualMentorsImg = 'input_file_2.png';
 
@@ -31,7 +31,6 @@ const Logo = ({ className = "w-6 h-6" }: { className?: string }) => (
     alt="Logo Cronograma O Mapa de Obras 2.0" 
     className={`${className} object-contain`}
     loading="eager"
-    fetchpriority="high"
   />
 );
 
@@ -54,10 +53,10 @@ const App: React.FC = () => {
   const [showStickyCTA, setShowStickyCTA] = useState(false);
 
   useEffect(() => {
-    // Timer para o senso de urgência (Lote 01)
-    const now = new Date();
-    const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+    // Timer para o senso de urgência
     const updateTimer = () => {
+      const now = new Date();
+      const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
       const diff = target.getTime() - new Date().getTime();
       if (diff <= 0) return;
       setTimeLeft({
@@ -69,18 +68,17 @@ const App: React.FC = () => {
     const timer = setInterval(updateTimer, 1000);
     updateTimer();
 
-    // Intersection Observer para animações de "Reveal" (Resolve o bug de carregamento)
+    // Intersection Observer para animações
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.1 });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Monitor de Scroll para Sticky CTA Mobile
     const handleScroll = () => {
       setShowStickyCTA(window.scrollY > 800);
     };
@@ -110,7 +108,7 @@ const App: React.FC = () => {
       </header>
 
       <main className="flex-grow">
-        {/* HERO SECTION - SEM CLASSE REVEAL PARA CARREGAMENTO IMEDIATO (LCP) */}
+        {/* HERO SECTION */}
         <section className="relative pt-28 pb-16 md:pt-40 md:pb-24 bg-white overflow-hidden">
           <div className="absolute inset-0 bg-grid"></div>
           <div className="container mx-auto px-4 md:px-6 relative">
@@ -176,7 +174,7 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* TRUST BAR / SOCIAL PROOF */}
+        {/* TRUST BAR */}
         <section className="bg-zinc-50 border-y border-zinc-100 py-6 overflow-hidden">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-40 grayscale">
@@ -300,9 +298,6 @@ const App: React.FC = () => {
                    </div>
                  ))}
               </div>
-              <div className="mt-16 flex justify-center">
-                 <MainCTA>QUERO INICIAR MINHA JORNADA</MainCTA>
-              </div>
            </div>
         </section>
 
@@ -396,10 +391,6 @@ const App: React.FC = () => {
                       APENAS R$ 49,90
                     </h3>
                   </div>
-                  
-                  <p className="text-white/60 text-[9px] font-bold uppercase tracking-widest border-t border-white/10 pt-2 w-fit mx-auto">
-                    Acesso vitalício aos materiais bônus (liberados pós-live)
-                  </p>
                 </div>
 
                 <button onClick={scrollToForm} className="w-full bg-brand-gold text-brand-black py-5 text-xs font-black uppercase tracking-[0.2em] hover:bg-white transition-all shadow-hard active:scale-95 group">
@@ -431,8 +422,7 @@ const App: React.FC = () => {
         <section className="py-20 bg-white reveal">
           <div className="container mx-auto px-4 max-w-2xl">
             <h2 className="text-xl font-black text-center mb-4 uppercase tracking-widest">Dúvidas Frequentes</h2>
-            <p className="text-[10px] font-bold text-zinc-400 text-center uppercase tracking-widest mb-10">Tudo o que você precisa saber sobre a imersão</p>
-            <div className="space-y-2">
+            <div className="space-y-2 mt-8">
               {FAQ_ITEMS.map((faq, idx) => (
                 <div key={idx} className="bg-white border border-zinc-200 overflow-hidden shadow-sm">
                   <button onClick={() => setOpenFaqIndex(openFaqIndex === idx ? null : idx)} className="w-full flex justify-between items-center px-5 py-4 text-left group">
@@ -442,9 +432,6 @@ const App: React.FC = () => {
                   {openFaqIndex === idx && <div className="px-5 pb-5 text-zinc-500 text-[11px] font-medium leading-relaxed border-t border-zinc-50 pt-4">{faq.answer}</div>}
                 </div>
               ))}
-            </div>
-            <div className="mt-12 flex justify-center">
-               <MainCTA>AINDA TENHO DÚVIDAS, QUERO FALAR COM VOCÊS</MainCTA>
             </div>
           </div>
         </section>

@@ -16,10 +16,13 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="input_file_0.png" />
     
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Play CDN (Solução definitiva para renderização imediata) -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
@@ -48,44 +51,50 @@
         }
       }
     </script>
-    <style>
-      body {
-        font-family: 'Inter', sans-serif;
-        background-color: #FFFFFF;
-        color: #111111;
-        overflow-x: hidden;
-        -webkit-font-smoothing: antialiased;
+    
+    <style type="text/tailwindcss">
+      @layer base {
+        body {
+          @apply font-sans bg-white text-brand-black antialiased overflow-x-hidden;
+        }
+        h1, h2, h3, h4 {
+          @apply font-bold leading-tight tracking-tight uppercase;
+          font-family: 'Montserrat', sans-serif;
+        }
       }
-      h1, h2, h3, h4 {
-        font-family: 'Montserrat', sans-serif;
-        letter-spacing: -0.02em;
-        line-height: 1.1;
-      }
+
       .bg-grid {
         background-image: radial-gradient(circle, #000 0.5px, transparent 0.5px);
         background-size: 24px 24px;
         opacity: 0.03;
       }
-      .reveal { opacity: 0; }
-      .reveal.active { animation: fadeUp 0.8s ease-out forwards; }
-      
-      header { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-      p { line-height: 1.6; }
+
+      .reveal {
+        opacity: 0;
+      }
+
+      .reveal.active {
+        animation: fadeUp 0.8s ease-out forwards;
+      }
+
+      header {
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
     </style>
+
     <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@19.0.0",
-    "react-dom": "https://esm.sh/react-dom@19.0.0",
-    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-    "lucide-react": "https://esm.sh/lucide-react@0.473.0",
-    "vite": "https://esm.sh/vite@^7.3.0",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
-  }
-}
-</script>
+    {
+      "imports": {
+        "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3",
+        "vite": "https://esm.sh/vite@^7.3.0",
+        "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
