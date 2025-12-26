@@ -21,21 +21,21 @@ import {
 } from 'lucide-react';
 import { FAQ_ITEMS, BONUSES, AGENDA } from './constants';
 
-// Referências diretas aos arquivos na raiz
-const LOGO_BLACK_GOLD = 'input_file_0.png';
-const actualMentorsImg = 'input_file_2.png';
+// CAMINHOS DIRETOS: O navegador buscará o arquivo na mesma pasta do index.html
+const logoUrl = 'input_file_0.png';
+const mentorsUrl = 'input_file_2.png';
 
 const Logo = ({ className = "w-6 h-6" }: { className?: string }) => (
   <img 
-    src={LOGO_BLACK_GOLD} 
+    src={logoUrl} 
     alt="Logo Cronograma O Mapa de Obras 2.0" 
     className={`${className} object-contain`}
-    loading="eager"
   />
 );
 
 const scrollToForm = () => {
-  document.getElementById('ingresso')?.scrollIntoView({ behavior: 'smooth' });
+  const el = document.getElementById('ingresso');
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
 };
 
 const MainCTA = ({ children, className = "" }: { children?: React.ReactNode, className?: string }) => (
@@ -53,11 +53,10 @@ const App: React.FC = () => {
   const [showStickyCTA, setShowStickyCTA] = useState(false);
 
   useEffect(() => {
-    // Timer para o senso de urgência
     const updateTimer = () => {
       const now = new Date();
       const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
-      const diff = target.getTime() - new Date().getTime();
+      const diff = target.getTime() - now.getTime();
       if (diff <= 0) return;
       setTimeLeft({
         h: Math.floor(diff / (1000 * 60 * 60)),
@@ -68,7 +67,6 @@ const App: React.FC = () => {
     const timer = setInterval(updateTimer, 1000);
     updateTimer();
 
-    // Intersection Observer para animações
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -228,7 +226,7 @@ const App: React.FC = () => {
               <div className="relative group">
                 <div className="absolute -inset-4 bg-brand-gold/10 opacity-0 group-hover:opacity-100 transition-opacity blur-xl"></div>
                 <img 
-                  src={actualMentorsImg} 
+                  src={mentorsUrl} 
                   alt="Ingrid e Fernanda" 
                   className="relative z-10 w-full h-auto grayscale hover:grayscale-0 transition-all duration-700 border-2 border-brand-black shadow-hard" 
                   loading="lazy" 
