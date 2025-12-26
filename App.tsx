@@ -20,13 +20,11 @@ import {
   Users
 } from 'lucide-react';
 
-// CRÍTICO: No navegador (ESM), imports locais PRECISAM da extensão .tsx
 import { FAQ_ITEMS, BONUSES, AGENDA } from './constants.tsx';
 
-// Definimos os caminhos das imagens como strings. 
-// No ambiente do AI Studio, os arquivos input_file_X estão na raiz.
-const logoPath = "input_file_0.png";
-const mentorsPath = "input_file_2.png";
+// Caminhos relativos explícitos para garantir carregamento
+const logoPath = "./input_file_0.png";
+const mentorsPath = "./input_file_2.png";
 
 const Logo = ({ className = "w-6 h-6" }: { className?: string }) => (
   <img 
@@ -34,11 +32,6 @@ const Logo = ({ className = "w-6 h-6" }: { className?: string }) => (
     alt="Logo Cronograma O Mapa de Obras 2.0" 
     className={`${className} object-contain block`}
     loading="eager"
-    onError={(e) => {
-      // Caso a imagem falhe, removemos para não mostrar o ícone de 'quebrado'
-      (e.target as HTMLImageElement).style.opacity = '0';
-      console.warn("Falha ao carregar logo:", logoPath);
-    }}
   />
 );
 
@@ -50,9 +43,9 @@ const scrollToForm = () => {
 const MainCTA = ({ children, className = "" }: { children?: React.ReactNode, className?: string }) => (
   <button 
     onClick={scrollToForm}
-    className={`bg-brand-gold text-brand-black px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-widest hover:bg-zinc-100 transition-all border-2 border-brand-black shadow-hard flex items-center justify-center gap-2 group active:scale-95 ${className}`}
+    className={`bg-[#FFB800] text-[#111111] px-6 py-4 text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] hover:bg-[#111111] hover:text-[#FFB800] transition-all border-2 border-[#111111] shadow-hard flex items-center justify-center gap-2 group active:scale-95 ${className}`}
   >
-    {children} <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+    {children} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
   </button>
 );
 
@@ -99,10 +92,9 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen selection:bg-brand-gold selection:text-brand-black">
+    <div className="flex flex-col min-h-screen bg-white text-brand-black selection:bg-brand-gold selection:text-brand-black">
       
-      {/* HEADER STICKY */}
-      <header className="fixed top-0 left-0 w-full z-50 bg-white/80 border-b border-zinc-100 py-3">
+      <header className="fixed top-0 left-0 w-full z-50 bg-white/90 border-b border-zinc-100 py-3">
         <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Logo className="w-6 h-6" />
@@ -121,7 +113,7 @@ const App: React.FC = () => {
           <div className="container mx-auto px-4 md:px-6 relative">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6 md:space-y-8 text-center lg:text-left animate-fade-up">
-                <div className="inline-flex items-center gap-2 bg-brand-black px-3 py-1 border border-brand-gold shadow-hard mb-2">
+                <div className="inline-flex items-center gap-2 bg-brand-black px-3 py-1 border border-brand-gold shadow-hard mb-2 mx-auto lg:mx-0">
                    <Clock className="w-3 h-3 text-brand-gold" />
                    <span className="text-[9px] font-black text-white uppercase tracking-wider">
                      O Lote 01 Expira em: <span className="text-brand-gold tabular-nums">{timeLeft.h}h {timeLeft.m}m {timeLeft.s}s</span>
@@ -147,9 +139,9 @@ const App: React.FC = () => {
                 </div>
               </div>
 
-              <div id="ingresso" className="scroll-mt-24 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+              <div id="ingresso" className="scroll-mt-24 animate-fade-up">
                 <div className="bg-white border-2 border-brand-black p-6 md:p-8 shadow-gold max-w-md mx-auto">
-                  <div className="mb-6">
+                  <div className="mb-6 text-center lg:text-left">
                     <h2 className="text-lg font-black text-brand-black uppercase tracking-tight">Vaga Exclusiva</h2>
                     <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Workshop Imersivo • Sábado 31/01</p>
                   </div>
@@ -239,10 +231,6 @@ const App: React.FC = () => {
                   alt="Ingrid e Fernanda" 
                   className="relative z-10 w-full h-auto grayscale hover:grayscale-0 transition-all duration-700 border-2 border-brand-black shadow-hard block" 
                   loading="lazy"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.opacity = '0';
-                    console.warn("Falha ao carregar mentores:", mentorsPath);
-                  }}
                 />
               </div>
               <div className="space-y-6">
@@ -264,7 +252,7 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* JOURNEY SECTION */}
+        {/* JOURNEY SECTION - CTA IMPLEMENTADO */}
         <section className="py-24 bg-zinc-50 border-y border-zinc-100 overflow-hidden reveal">
            <div className="container mx-auto px-4 max-w-6xl text-center">
               <div className="mb-16 space-y-4">
@@ -274,7 +262,7 @@ const App: React.FC = () => {
                 <div className="w-12 h-1 bg-brand-gold mx-auto"></div>
               </div>
 
-              <div className="grid md:grid-cols-4 gap-4 md:gap-8">
+              <div className="grid md:grid-cols-4 gap-4 md:gap-8 mb-16">
                  {[
                    { 
                      icon: <Zap className="w-6 h-6"/>, 
@@ -309,10 +297,15 @@ const App: React.FC = () => {
                    </div>
                  ))}
               </div>
+
+              <div className="flex flex-col items-center gap-4">
+                <MainCTA>QUERO MEU ACESSO IMEDIATO</MainCTA>
+                <p className="text-[8px] font-bold text-zinc-400 uppercase tracking-widest">Inscrição confirmada via Hotmart</p>
+              </div>
            </div>
         </section>
 
-        {/* AGENDA */}
+        {/* AGENDA SECTION - CTA IMPLEMENTADO */}
         <section className="py-20 bg-white reveal">
           <div className="container mx-auto px-4 max-w-4xl text-center">
              <div className="mb-16 space-y-4">
@@ -320,7 +313,7 @@ const App: React.FC = () => {
                 <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Um dia inteiro focado na sua transformação técnica</p>
                 <div className="w-12 h-1 bg-brand-gold mx-auto"></div>
              </div>
-             <div className="grid md:grid-cols-2 gap-6 text-left">
+             <div className="grid md:grid-cols-2 gap-6 text-left mb-16">
                 {AGENDA.map((item, i) => (
                   <div key={i} className="bg-white p-8 border border-zinc-200 shadow-sm hover:shadow-hard transition-all">
                      <span className="text-[8px] font-black text-brand-gold uppercase tracking-widest block mb-2">{item.date}</span>
@@ -335,10 +328,14 @@ const App: React.FC = () => {
                   </div>
                 ))}
              </div>
+             <div className="flex flex-col items-center gap-4">
+               <MainCTA>QUERO GARANTIR MINHA VAGA NO ZOOM</MainCTA>
+               <span className="text-[8px] font-black text-brand-black bg-brand-gold/20 px-3 py-1 uppercase tracking-widest">Vagas Limitadas pela capacidade da sala</span>
+             </div>
           </div>
         </section>
 
-        {/* VALUE STACK SECTION */}
+        {/* BONUS SECTION */}
         <section className="py-20 bg-white border-t border-zinc-100 reveal">
           <div className="container mx-auto px-4 max-w-5xl text-center">
              <h2 className="text-2xl md:text-3xl font-black text-brand-black uppercase tracking-tight mb-2">Seu Pacote de Ferramentas</h2>
@@ -362,7 +359,6 @@ const App: React.FC = () => {
                 ))}
              </div>
 
-             {/* THE VALUE STACK CARD */}
              <div className="max-w-xl mx-auto bg-brand-black border-2 border-brand-gold p-8 md:p-12 shadow-hard relative overflow-hidden">
                 <div className="absolute top-0 right-0 bg-brand-gold text-brand-black px-4 py-1 text-[9px] font-black uppercase tracking-widest transform rotate-45 translate-x-8 translate-y-4">
                   OFERTA ATIVA
@@ -411,10 +407,10 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* GUARANTEE SECTION */}
+        {/* GUARANTEE - CTA FINAL IMPLEMENTADO */}
         <section className="py-20 bg-zinc-50 reveal">
           <div className="container mx-auto px-4 max-w-4xl text-center">
-            <div className="bg-white border border-zinc-200 p-8 md:p-12 shadow-sm flex flex-col md:flex-row items-center gap-8">
+            <div className="bg-white border border-zinc-200 p-8 md:p-12 shadow-sm flex flex-col md:flex-row items-center gap-8 mb-12">
               <div className="relative">
                 <ShieldCheck className="w-24 h-24 text-brand-gold" />
                 <div className="absolute inset-0 flex items-center justify-center font-black text-brand-black text-xl pt-1">7</div>
@@ -425,6 +421,11 @@ const App: React.FC = () => {
                   Inscreva-se com tranquilidade absoluta. Se você participar da imersão e sentir que o conteúdo não é para você, basta solicitar o reembolso total em até 7 dias. O risco é todo nosso.
                 </p>
               </div>
+            </div>
+            
+            <div className="flex flex-col items-center gap-6">
+              <h3 className="text-lg md:text-xl font-black uppercase tracking-tight text-brand-black">Pronta para assumir o comando da sua obra?</h3>
+              <MainCTA className="w-full md:w-auto shadow-gold">SIM, QUERO O CRONOGRAMA 2.0</MainCTA>
             </div>
           </div>
         </section>
@@ -448,7 +449,6 @@ const App: React.FC = () => {
         </section>
       </main>
 
-      {/* FOOTER */}
       <footer className="bg-white py-12 border-t border-zinc-100 text-center space-y-4">
         <Logo className="w-10 h-10 mx-auto opacity-50 grayscale" />
         <div className="flex justify-center gap-6">
@@ -461,7 +461,6 @@ const App: React.FC = () => {
         </p>
       </footer>
 
-      {/* STICKY MOBILE CTA */}
       <div className={`fixed bottom-0 left-0 w-full p-4 z-[100] md:hidden transition-all duration-500 transform ${showStickyCTA ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
         <button 
           onClick={scrollToForm}
