@@ -33,6 +33,16 @@
             boxShadow: {
               'hard': '4px 4px 0px 0px #111111',
               'gold': '4px 4px 0px 0px #FFB800',
+            },
+            animation: {
+              'fade-up': 'fadeUp 0.6s ease-out forwards',
+              'pulse-slow': 'pulse 3s infinite',
+            },
+            keyframes: {
+              fadeUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              }
             }
           }
         }
@@ -56,7 +66,10 @@
         background-size: 24px 24px;
         opacity: 0.03;
       }
-      /* Otimização de legibilidade */
+      .reveal { opacity: 0; }
+      .reveal.active { animation: fadeUp 0.8s ease-out forwards; }
+      
+      header { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
       p { line-height: 1.6; }
     </style>
     <script type="importmap">

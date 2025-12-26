@@ -6,7 +6,6 @@ import {
   ChevronDown, 
   ChevronUp,
   CheckCircle2,
-  XCircle,
   Check,
   Lock,
   Trophy,
@@ -14,10 +13,12 @@ import {
   Clock,
   Plus,
   MessageCircle,
-  Mail,
   Zap,
   Calendar,
-  Gift
+  Gift,
+  ShieldCheck,
+  Star,
+  Users
 } from 'lucide-react';
 import { FAQ_ITEMS, BONUSES, AGENDA, QUALIFICATION } from './constants';
 
@@ -30,6 +31,7 @@ const Logo = ({ className = "w-6 h-6" }: { className?: string }) => (
     alt="Logo Cronograma O Mapa de Obras 2.0" 
     className={`${className} object-contain`}
     loading="eager"
+    fetchpriority="high"
   />
 );
 
@@ -40,7 +42,7 @@ const scrollToForm = () => {
 const MainCTA = ({ children, className = "" }: { children?: React.ReactNode, className?: string }) => (
   <button 
     onClick={scrollToForm}
-    className={`bg-brand-gold text-brand-black px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-widest hover:bg-zinc-100 transition-all border-2 border-brand-black shadow-hard flex items-center justify-center gap-2 group ${className}`}
+    className={`bg-brand-gold text-brand-black px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-widest hover:bg-zinc-100 transition-all border-2 border-brand-black shadow-hard flex items-center justify-center gap-2 group active:scale-95 ${className}`}
   >
     {children} <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
   </button>
@@ -49,8 +51,10 @@ const MainCTA = ({ children, className = "" }: { children?: React.ReactNode, cla
 const App: React.FC = () => {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState({ h: 0, m: 0, s: 0 });
+  const [showStickyCTA, setShowStickyCTA] = useState(false);
 
   useEffect(() => {
+    // Timer para o senso de urgência (Lote 01)
     const now = new Date();
     const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
     const updateTimer = () => {
@@ -64,12 +68,36 @@ const App: React.FC = () => {
     };
     const timer = setInterval(updateTimer, 1000);
     updateTimer();
-    return () => clearInterval(timer);
+
+    // Intersection Observer para animações de "Reveal" (Resolve o bug de carregamento)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Monitor de Scroll para Sticky CTA Mobile
+    const handleScroll = () => {
+      setShowStickyCTA(window.scrollY > 800);
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-zinc-100 py-3">
+    <div className="flex flex-col min-h-screen selection:bg-brand-gold selection:text-brand-black">
+      
+      {/* HEADER STICKY */}
+      <header className="fixed top-0 left-0 w-full z-50 bg-white/80 border-b border-zinc-100 py-3">
         <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Logo className="w-6 h-6" />
@@ -82,12 +110,12 @@ const App: React.FC = () => {
       </header>
 
       <main className="flex-grow">
-        {/* HERO SECTION */}
+        {/* HERO SECTION - SEM CLASSE REVEAL PARA CARREGAMENTO IMEDIATO (LCP) */}
         <section className="relative pt-28 pb-16 md:pt-40 md:pb-24 bg-white overflow-hidden">
           <div className="absolute inset-0 bg-grid"></div>
           <div className="container mx-auto px-4 md:px-6 relative">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6 md:space-y-8 text-center lg:text-left">
+              <div className="space-y-6 md:space-y-8 text-center lg:text-left animate-fade-up">
                 <div className="inline-flex items-center gap-2 bg-brand-black px-3 py-1 border border-brand-gold shadow-hard mb-2">
                    <Clock className="w-3 h-3 text-brand-gold" />
                    <span className="text-[9px] font-black text-white uppercase tracking-wider">
@@ -114,7 +142,7 @@ const App: React.FC = () => {
                 </div>
               </div>
 
-              <div id="ingresso" className="scroll-mt-24">
+              <div id="ingresso" className="scroll-mt-24 animate-fade-up" style={{ animationDelay: '0.2s' }}>
                 <div className="bg-white border-2 border-brand-black p-6 md:p-8 shadow-gold max-w-md mx-auto">
                   <div className="mb-6">
                     <h2 className="text-lg font-black text-brand-black uppercase tracking-tight">Vaga Exclusiva</h2>
@@ -134,8 +162,8 @@ const App: React.FC = () => {
                         </div>
                         <span className="text-[9px] font-black text-brand-gold bg-brand-black px-2 py-1 uppercase tracking-widest">LOTE 01</span>
                       </div>
-                      <button type="submit" className="w-full bg-brand-black text-brand-gold py-4 flex items-center justify-center gap-2 text-[10px] font-black tracking-widest hover:bg-brand-gold hover:text-brand-black transition-all border-2 border-brand-black shadow-hard uppercase">
-                        RESERVAR MEU LUGAR <ArrowRight className="w-3.5 h-3.5" />
+                      <button type="submit" className="w-full bg-brand-black text-brand-gold py-4 flex items-center justify-center gap-2 text-[10px] font-black tracking-widest hover:bg-brand-gold hover:text-brand-black transition-all border-2 border-brand-black shadow-hard uppercase group">
+                        RESERVAR MEU LUGAR <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                       </button>
                     </div>
                   </form>
@@ -148,8 +176,25 @@ const App: React.FC = () => {
           </div>
         </section>
 
+        {/* TRUST BAR / SOCIAL PROOF */}
+        <section className="bg-zinc-50 border-y border-zinc-100 py-6 overflow-hidden">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-40 grayscale">
+              <div className="flex items-center gap-2 font-black text-[10px] uppercase tracking-widest text-brand-black">
+                <Users className="w-4 h-4" /> +1000 Arquitetas Impactadas
+              </div>
+              <div className="flex items-center gap-2 font-black text-[10px] uppercase tracking-widest text-brand-black">
+                <Star className="w-4 h-4 fill-brand-black" /> Avaliação 4.9/5.0
+              </div>
+              <div className="flex items-center gap-2 font-black text-[10px] uppercase tracking-widest text-brand-black">
+                <ShieldCheck className="w-4 h-4" /> Método Validado
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* PAIN POINTS */}
-        <section className="py-20 bg-brand-black text-white">
+        <section className="py-20 bg-brand-black text-white reveal">
           <div className="container mx-auto px-4 max-w-4xl">
              <div className="text-center md:text-left mb-12 space-y-4">
                 <span className="text-brand-gold font-black text-[9px] uppercase tracking-[0.3em] block">O CUSTO DA FALTA DE MÉTODO</span>
@@ -179,12 +224,17 @@ const App: React.FC = () => {
         </section>
 
         {/* THE METHOD */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-white reveal">
           <div className="container mx-auto px-4 max-w-5xl">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="relative group">
                 <div className="absolute -inset-4 bg-brand-gold/10 opacity-0 group-hover:opacity-100 transition-opacity blur-xl"></div>
-                <img src={actualMentorsImg} alt="Ingrid e Fernanda" className="relative z-10 w-full h-auto grayscale hover:grayscale-0 transition-all duration-700 border-2 border-brand-black shadow-hard" loading="lazy" />
+                <img 
+                  src={actualMentorsImg} 
+                  alt="Ingrid e Fernanda" 
+                  className="relative z-10 w-full h-auto grayscale hover:grayscale-0 transition-all duration-700 border-2 border-brand-black shadow-hard" 
+                  loading="lazy" 
+                />
               </div>
               <div className="space-y-6">
                 <span className="text-brand-gold font-black text-[9px] uppercase tracking-[0.3em] block">DE ARQUITETA PARA ARQUITETA</span>
@@ -205,8 +255,8 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* UPDATED JOURNEY SECTION */}
-        <section className="py-24 bg-zinc-50 border-y border-zinc-100 overflow-hidden">
+        {/* JOURNEY SECTION */}
+        <section className="py-24 bg-zinc-50 border-y border-zinc-100 overflow-hidden reveal">
            <div className="container mx-auto px-4 max-w-6xl text-center">
               <div className="mb-16 space-y-4">
                 <span className="text-brand-gold font-black text-[9px] uppercase tracking-[0.4em] block">CLAREZA ABSOLUTA</span>
@@ -257,7 +307,7 @@ const App: React.FC = () => {
         </section>
 
         {/* AGENDA */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-white reveal">
           <div className="container mx-auto px-4 max-w-4xl text-center">
              <div className="mb-16 space-y-4">
                 <h2 className="text-2xl md:text-3xl font-black text-brand-black uppercase tracking-tight">Dinâmica da Imersão</h2>
@@ -282,8 +332,8 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* BONUSES - VALUE STACK SUMMARY BOX REFINED */}
-        <section className="py-20 bg-white border-t border-zinc-100">
+        {/* VALUE STACK SECTION */}
+        <section className="py-20 bg-white border-t border-zinc-100 reveal">
           <div className="container mx-auto px-4 max-w-5xl text-center">
              <h2 className="text-2xl md:text-3xl font-black text-brand-black uppercase tracking-tight mb-2">Seu Pacote de Ferramentas</h2>
              <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-12">Tudo o que você precisa para aplicar o método imediatamente</p>
@@ -306,7 +356,7 @@ const App: React.FC = () => {
                 ))}
              </div>
 
-             {/* THE VALUE STACK CARD - FULLY OPTIMIZED TO AVOID CONFUSION */}
+             {/* THE VALUE STACK CARD */}
              <div className="max-w-xl mx-auto bg-brand-black border-2 border-brand-gold p-8 md:p-12 shadow-hard relative overflow-hidden">
                 <div className="absolute top-0 right-0 bg-brand-gold text-brand-black px-4 py-1 text-[9px] font-black uppercase tracking-widest transform rotate-45 translate-x-8 translate-y-4">
                   OFERTA ATIVA
@@ -342,27 +392,43 @@ const App: React.FC = () => {
                   
                   <div className="mb-2">
                     <span className="text-brand-gold text-[10px] font-black uppercase tracking-[0.3em] block mb-1">INVESTIMENTO ÚNICO</span>
-                    <h3 className="text-white text-4xl md:text-5xl font-black tracking-tighter uppercase leading-tight">
+                    <h3 className="text-white text-4xl md:text-5xl font-black tracking-tighter uppercase leading-tight animate-pulse-slow">
                       APENAS R$ 49,90
                     </h3>
                   </div>
                   
-                  <div className="flex flex-col gap-1 items-center">
-                    <p className="text-white/60 text-[9px] font-bold uppercase tracking-widest border-t border-white/10 pt-2 w-fit mx-auto">
-                      Acesso vitalício aos materiais bônus (liberados pós-live)
-                    </p>
-                  </div>
+                  <p className="text-white/60 text-[9px] font-bold uppercase tracking-widest border-t border-white/10 pt-2 w-fit mx-auto">
+                    Acesso vitalício aos materiais bônus (liberados pós-live)
+                  </p>
                 </div>
 
-                <button onClick={scrollToForm} className="w-full bg-brand-gold text-brand-black py-5 text-xs font-black uppercase tracking-[0.2em] hover:bg-white transition-all shadow-hard active:scale-95">
-                   GARANTIR MINHA VAGA AGORA
+                <button onClick={scrollToForm} className="w-full bg-brand-gold text-brand-black py-5 text-xs font-black uppercase tracking-[0.2em] hover:bg-white transition-all shadow-hard active:scale-95 group">
+                   GARANTIR MINHA VAGA AGORA <ArrowRight className="inline w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                 </button>
              </div>
           </div>
         </section>
 
+        {/* GUARANTEE SECTION */}
+        <section className="py-20 bg-zinc-50 reveal">
+          <div className="container mx-auto px-4 max-w-4xl text-center">
+            <div className="bg-white border border-zinc-200 p-8 md:p-12 shadow-sm flex flex-col md:flex-row items-center gap-8">
+              <div className="relative">
+                <ShieldCheck className="w-24 h-24 text-brand-gold" />
+                <div className="absolute inset-0 flex items-center justify-center font-black text-brand-black text-xl pt-1">7</div>
+              </div>
+              <div className="text-left space-y-3">
+                <h2 className="text-xl md:text-2xl font-black text-brand-black uppercase tracking-tight">Garantia Incondicional de 7 Dias</h2>
+                <p className="text-xs md:text-sm text-zinc-500 font-medium leading-relaxed">
+                  Inscreva-se com tranquilidade absoluta. Se você participar da imersão e sentir que o conteúdo não é para você, basta solicitar o reembolso total em até 7 dias. O risco é todo nosso.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* FAQ */}
-        <section className="py-20 bg-zinc-50">
+        <section className="py-20 bg-white reveal">
           <div className="container mx-auto px-4 max-w-2xl">
             <h2 className="text-xl font-black text-center mb-4 uppercase tracking-widest">Dúvidas Frequentes</h2>
             <p className="text-[10px] font-bold text-zinc-400 text-center uppercase tracking-widest mb-10">Tudo o que você precisa saber sobre a imersão</p>
@@ -384,8 +450,9 @@ const App: React.FC = () => {
         </section>
       </main>
 
+      {/* FOOTER */}
       <footer className="bg-white py-12 border-t border-zinc-100 text-center space-y-4">
-        <Logo className="w-10 h-10 mx-auto" />
+        <Logo className="w-10 h-10 mx-auto opacity-50 grayscale" />
         <div className="flex justify-center gap-6">
            <a href="https://instagram.com/inovandonasuaobra" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-brand-black transition-colors" aria-label="Instagram">
              <Instagram className="w-5 h-5" />
@@ -395,6 +462,18 @@ const App: React.FC = () => {
           Cronograma O Mapa de Obras 2.0 • Todos os Direitos Reservados • 2026
         </p>
       </footer>
+
+      {/* STICKY MOBILE CTA */}
+      <div className={`fixed bottom-0 left-0 w-full p-4 z-[100] md:hidden transition-all duration-500 transform ${showStickyCTA ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
+        <button 
+          onClick={scrollToForm}
+          className="w-full bg-brand-gold text-brand-black py-4 px-6 text-[10px] font-black uppercase tracking-widest shadow-2xl border-2 border-brand-black flex items-center justify-between group active:scale-95"
+        >
+          <span>QUERO MINHA VAGA AGORA</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      </div>
+
     </div>
   );
 };
