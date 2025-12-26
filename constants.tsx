@@ -3,93 +3,84 @@ import React from 'react';
 import { 
   ClipboardList, 
   FileSpreadsheet, 
-  FileText,
-  CheckCircle2
+  FileText
 } from 'lucide-react';
 import { FAQItem } from './types';
 
 export const AGENDA = [
   {
-    day: "DIA 01",
-    date: "31/01 - 09:00",
-    title: "A Engenharia do Planejamento",
+    day: "MÓDULO MANHÃ",
+    date: "SÁBADO 31/01 • 09:00 - 12:00",
+    title: "A Logística da Execução",
     topics: [
-      "O Mapa do Início ao Fim: O passo a passo definitivo para montar um cronograma eficiente e realista que o mestre de obras realmente respeita.",
-      "Radar de Marcos Críticos: Aprenda a identificar os pontos de 'não retorno' da obra e antecipe erros antes que eles se tornem prejuízos no seu bolso.",
-      "Sincronização Mestra: Como encaixar fornecedores e medições no 'timing' perfeito para que a obra nunca pare por falta de material ou medição atrasada."
+      "A Engrenagem Perfeita: A sequência de serviços que evita o retrabalho e economiza até 20% do orçamento final.",
+      "Proteção do Design: Como o Cronograma O Mapa de Obras 2.0 garante que o acabamento de luxo não sofra danos de fornecedores anteriores.",
+      "O Pulo do Gato Técnico: A realidade sobre o tempo real de cura e secagem que dita o ritmo saudável de qualquer reforma."
     ]
   },
   {
-    day: "DIA 02",
-    date: "01/02 - 09:00",
-    title: "O Comando e a Liderança Técnica",
+    day: "MÓDULO TARDE",
+    date: "SÁBADO 31/01 • 14:00 - 18:00",
+    title: "Liderança e Lucratividade",
     topics: [
-      "Blindagem contra Imprevistos: Desenvolva a habilidade de ajustar rotas e lidar com mudanças no canteiro sem desespero e mantendo o lucro da operação.",
-      "O Cronograma como Arma de Poder: Como usar o planejamento para se posicionar com total confiança e ser a líder máxima do seu canteiro de obras.",
-      "Venda de Gestão Lucrativa: Como transformar o acompanhamento de obra em um serviço de alto valor e parar de uma vez por todas de fazer visitas 'de brinde'."
+      "Posicionamento de Autoridade: Como usar o Cronograma O Mapa de Obras 2.0 para comandar a equipe com segurança técnica absoluta.",
+      "Gerenciamento Sem Estresse: O fluxo para acompanhar projetos simultâneos sem perder a qualidade ou a sanidade mental.",
+      "Execução em Prática: Como apresentar o Cronograma O Mapa de Obras 2.0 ao cliente para valorizar seus honorários de acompanhamento."
     ]
   }
 ];
 
 export const QUALIFICATION = {
   for: [
-    "Arquitetas com 2 a 5 anos de mercado que buscam segurança.",
-    "Donas de escritório que querem parar de perder lucro na obra.",
-    "Profissionais autônomas que sentem que a obra é um 'caos'.",
-    "Quem quer cobrar pela gestão técnica e não apenas pela visita."
+    "Arquitetas que buscam domínio técnico sobre a execução.",
+    "Profissionais que querem eliminar o prejuízo com retrabalhos.",
+    "Quem deseja proteger materiais nobres de danos na obra.",
+    "Quem busca segurança para liderar grandes equipes de fornecedores."
   ],
   notFor: [
-    "Quem acredita que obra é 'problema do mestre de obras'.",
-    "Estudantes que ainda não pretendem atuar no campo.",
-    "Grandes construtoras com processos já consolidados.",
-    "Quem busca apenas teoria sem aplicação prática."
+    "Quem aceita o caos e o erro como parte normal da rotina.",
+    "Quem não preza pela proteção dos acabamentos e materiais.",
+    "Quem prefere confiar na intuição em vez de um método validado.",
+    "Quem não está disposta a elevar seu padrão de entrega técnica."
   ]
 };
 
 export const BONUSES = [
   {
-    title: "Planilha Mestra de Cronograma 2.0",
-    value: "R$ 197,00",
-    description: "A mesma ferramenta que usamos para organizar prazos e evitar atrasos no nosso escritório.",
+    title: "Matriz de Sequência Ideal",
+    value: "R$ 497,00",
+    description: "Sua bússola técnica. O fluxo visual detalhado para você nunca mais permitir que um fornecedor entre na obra antes da hora certa.",
     icon: <FileSpreadsheet className="w-5 h-5" />
   },
   {
-    title: "Checklist de Vistoria Técnica",
-    value: "R$ 97,00",
-    description: "O guia passo a passo para conferir cada etapa da obra sem esquecer detalhes cruciais.",
+    title: "Checklist de Visita Técnica",
+    value: "R$ 197,00",
+    description: "Um guia de conferência rápida para garantir que cada etapa do Cronograma 2.0 esteja sendo respeitada fielmente pela equipe.",
     icon: <ClipboardList className="w-5 h-5" />
   },
   {
-    title: "Script de Venda de Gestão",
-    value: "R$ 147,00",
-    description: "Como explicar para o cliente que a sua gestão economiza o dinheiro dele.",
+    title: "Guia de Postura e Liderança",
+    value: "R$ 297,00",
+    description: "Scripts de comunicação para alinhar prazos e cobrar qualidade dos fornecedores com autoridade e elegância.",
     icon: <FileText className="w-5 h-5" />
   }
 ];
 
 export const FAQ_ITEMS: FAQItem[] = [
   {
-    question: "Por que o valor é apenas R$ 49,90?",
-    answer: "Este é um valor simbólico de comprometimento. Queremos que arquitetas que realmente desejam profissionalizar sua gestão tenham acesso ao nosso método. O valor garante seu acesso aos DOIS DIAS de workshop ao vivo e a TODOS os bônus (Planilha, Checklist e Script)."
+    question: "Quando receberei os bônus e materiais?",
+    answer: "Os materiais bônus (Matriz, Checklist e Guia) são ferramentas complementares à imersão. Para garantir que você saiba exatamente como usá-los, eles serão liberados logo após o encerramento da live no dia 31/01."
   },
   {
-    question: "O Workshop ficará gravado para assistir depois?",
-    answer: "Não. Esta é uma imersão 100% AO VIVO e interativa. Acreditamos que a transformação acontece na troca real e no compromisso de estar presente. Programe-se para estar conosco nos dias 31/01 e 01/02 às 09:00."
+    question: "Como funciona o Grupo VIP de WhatsApp?",
+    answer: "É o nosso 'QG'. Assim que o pagamento for aprovado, você recebe o link. Lá você fará networking com outras arquitetas, receberá avisos exclusivos e o link direto para a nossa sala de ZOOM no dia do evento."
   },
   {
-    question: "Eu não entendo nada de engenharia ou execução. Vou conseguir acompanhar?",
-    answer: "Com certeza. O método foi criado justamente para arquitetas que sentem essa lacuna da faculdade. Explicamos a lógica da obra de forma visual e prática, focada em quem projeta e precisa gerenciar fornecedores, não em quem vai levantar a parede."
+    question: "O valor de R$ 49,90 é real? Tem pegadinha?",
+    answer: "É real e sem pegadinhas. Este valor é simbólico para reunir arquitetas comprometidas em elevar o nível técnico do mercado. O objetivo é que você conheça nosso método e tenha resultados imediatos na sua próxima obra."
   },
   {
-    question: "Já tenho alguns anos de mercado, esse conteúdo não é básico?",
-    answer: "Se você ainda sente frio na barriga ao entrar na obra ou se o mestre de obras ainda questiona suas decisões, esse conteúdo é para você. Não vamos falar de teoria, vamos entregar o fluxo de trabalho de um escritório que já entregou mais de 250 obras."
-  },
-  {
-    question: "Quando recebo os bônus prometidos?",
-    answer: "O acesso aos materiais (Planilha Mestra, Checklist e Script) será liberado logo após a conclusão da imersão no segundo dia, para garantir que você saiba exatamente como aplicar cada ferramenta da maneira correta."
-  },
-  {
-    question: "Serve para quem trabalha apenas com interiores?",
-    answer: "Sim! Nosso foco principal é a gestão de obras de interiores residenciais e comerciais. O cronograma é adaptado para a velocidade e os detalhes que esse tipo de obra exige."
+    question: "A imersão será cansativa por ser o dia todo?",
+    answer: "De forma alguma! Nossa dinâmica é focada em blocos curtos de conteúdo denso seguidos de interação e intervalos. Foi projetada para ser o sábado mais produtivo da sua carreira, não uma palestra monótona."
   }
 ];
