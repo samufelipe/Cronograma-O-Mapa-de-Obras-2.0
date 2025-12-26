@@ -4,8 +4,8 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  // Removendo 'base' ou definindo como vazio para permitir caminhos relativos
-  base: '', 
+  // Definindo como './' para garantir que os caminhos sejam relativos e as imagens carreguem
+  base: './', 
   server: {
     port: 3000
   },

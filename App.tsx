@@ -19,17 +19,26 @@ import {
   Star,
   Users
 } from 'lucide-react';
-import { FAQ_ITEMS, BONUSES, AGENDA } from './constants';
 
-// CAMINHOS DIRETOS: O navegador buscará o arquivo na mesma pasta do index.html
-const logoUrl = 'input_file_0.png';
-const mentorsUrl = 'input_file_2.png';
+// CRÍTICO: No navegador (ESM), imports locais PRECISAM da extensão .tsx
+import { FAQ_ITEMS, BONUSES, AGENDA } from './constants.tsx';
+
+// Definimos os caminhos das imagens como strings. 
+// No ambiente do AI Studio, os arquivos input_file_X estão na raiz.
+const logoPath = "input_file_0.png";
+const mentorsPath = "input_file_2.png";
 
 const Logo = ({ className = "w-6 h-6" }: { className?: string }) => (
   <img 
-    src={logoUrl} 
+    src={logoPath} 
     alt="Logo Cronograma O Mapa de Obras 2.0" 
-    className={`${className} object-contain`}
+    className={`${className} object-contain block`}
+    loading="eager"
+    onError={(e) => {
+      // Caso a imagem falhe, removemos para não mostrar o ícone de 'quebrado'
+      (e.target as HTMLImageElement).style.opacity = '0';
+      console.warn("Falha ao carregar logo:", logoPath);
+    }}
   />
 );
 
@@ -226,10 +235,14 @@ const App: React.FC = () => {
               <div className="relative group">
                 <div className="absolute -inset-4 bg-brand-gold/10 opacity-0 group-hover:opacity-100 transition-opacity blur-xl"></div>
                 <img 
-                  src={mentorsUrl} 
+                  src={mentorsPath} 
                   alt="Ingrid e Fernanda" 
-                  className="relative z-10 w-full h-auto grayscale hover:grayscale-0 transition-all duration-700 border-2 border-brand-black shadow-hard" 
-                  loading="lazy" 
+                  className="relative z-10 w-full h-auto grayscale hover:grayscale-0 transition-all duration-700 border-2 border-brand-black shadow-hard block" 
+                  loading="lazy"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.opacity = '0';
+                    console.warn("Falha ao carregar mentores:", mentorsPath);
+                  }}
                 />
               </div>
               <div className="space-y-6">
